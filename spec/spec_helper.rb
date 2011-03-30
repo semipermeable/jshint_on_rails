@@ -1,7 +1,7 @@
-require 'jslint'
+require 'jshint'
 require 'fakefs'
 
-module JSLint::Utils
+module JSHint::Utils
   # disable logging to stdout
   def self.xprint(x) ; end
   def self.xputs(x) ; end

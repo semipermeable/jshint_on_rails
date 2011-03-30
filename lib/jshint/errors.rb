@@ -1,4 +1,4 @@
-module JSLint
+module JSHint
 
   class NoJavaException < StandardError
   end

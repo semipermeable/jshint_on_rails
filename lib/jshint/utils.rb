@@ -1,10 +1,10 @@
 require 'fileutils'
 require 'yaml'
 
-module JSLint
+module JSHint
 
-  VERSION = "1.0.6"
-  DEFAULT_CONFIG_FILE = File.expand_path(File.dirname(__FILE__) + "/config/jslint.yml")
+  VERSION = "1.0.0"
+  DEFAULT_CONFIG_FILE = File.expand_path(File.dirname(__FILE__) + "/config/jshint.yml")
 
   class << self
     attr_accessor :config_path
@@ -49,23 +49,23 @@ module JSLint
       end
 
       def copy_config_file
-        raise ArgumentError, "Please set JSLint.config_path" if JSLint.config_path.nil?
-        xprint "Creating example JSLint config file in #{File.expand_path(JSLint.config_path)}... "
-        if File.exists?(JSLint.config_path)
+        raise ArgumentError, "Please set JSHint.config_path" if JSHint.config_path.nil?
+        xprint "Creating example JSHint config file in #{File.expand_path(JSHint.config_path)}... "
+        if File.exists?(JSHint.config_path)
           xputs "\n\nWarning: config file exists, so it won't be overwritten. " +
-                "You can copy it manually from the jslint_on_rails directory if you want to reset it."
+                "You can copy it manually from the jshint_on_rails directory if you want to reset it."
         else
-          FileUtils.copy(JSLint::DEFAULT_CONFIG_FILE, JSLint.config_path)
+          FileUtils.copy(JSHint::DEFAULT_CONFIG_FILE, JSHint.config_path)
           xputs "done."
         end
       end
 
       def remove_config_file
-        raise ArgumentError, "Please set JSLint.config_path" if JSLint.config_path.nil?
+        raise ArgumentError, "Please set JSHint.config_path" if JSHint.config_path.nil?
         xprint "Removing config file... "
-        if File.exists?(JSLint.config_path) && File.file?(JSLint.config_path)
-          if File.read(JSLint.config_path) == File.read(JSLint::DEFAULT_CONFIG_FILE)
-            File.delete(JSLint.config_path)
+        if File.exists?(JSHint.config_path) && File.file?(JSHint.config_path)
+          if File.read(JSHint.config_path) == File.read(JSHint::DEFAULT_CONFIG_FILE)
+            File.delete(JSHint.config_path)
             xputs "OK."
           else
             xputs "File was modified, so it won't be deleted automatically."

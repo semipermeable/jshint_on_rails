@@ -1,7 +1,7 @@
-require 'jslint/errors'
-require 'jslint/utils'
+require 'jshint/errors'
+require 'jshint/utils'
 
-module JSLint
+module JSHint
 
   PATH = File.dirname(__FILE__)
 
@@ -10,17 +10,17 @@ module JSLint
   TEST_JAR_CLASS = "Test"
   RHINO_JAR_CLASS = "org.mozilla.javascript.tools.shell.Main"
 
-  JSLINT_FILE = File.expand_path("#{PATH}/vendor/jslint.js")
+  JSLINT_FILE = File.expand_path("#{PATH}/vendor/jshint.js")
 
   class Lint
 
     # available options:
     # :paths => [list of paths...]
     # :exclude_paths => [list of exluded paths...]
-    # :config_path => path to custom config file (can be set via JSLint.config_path too)
+    # :config_path => path to custom config file (can be set via JSHint.config_path too)
     def initialize(options = {})
       default_config = Utils.load_config_file(DEFAULT_CONFIG_FILE)
-      custom_config = Utils.load_config_file(options[:config_path] || JSLint.config_path)
+      custom_config = Utils.load_config_file(options[:config_path] || JSHint.config_path)
       @config = default_config.merge(custom_config)
 
       if @config['predef'].is_a?(Array)
@@ -37,10 +37,10 @@ module JSLint
 
     def run
       check_java
-      Utils.xputs "Running JSLint:\n\n"
+      Utils.xputs "Running JSHint:\n\n"
       arguments = "#{JSLINT_FILE} #{option_string.inspect.gsub(/\$/, "\\$")} #{@file_list.join(' ')}"
       success = call_java_with_status(RHINO_JAR_FILE, RHINO_JAR_CLASS, arguments)
-      raise LintCheckFailure, "JSLint test failed." unless success
+      raise LintCheckFailure, "JSHint test failed." unless success
     end
 
 
@@ -64,7 +64,7 @@ module JSLint
         if java_test.strip == "OK"
           @java_ok = true
         else
-          raise NoJavaException, "Please install Java before running JSLint."
+          raise NoJavaException, "Please install Java before running JSHint."
         end
       end
     end

@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe JSLint::Utils do
+describe JSHint::Utils do
 
-  JSU = JSLint::Utils
+  JSU = JSHint::Utils
 
   before :all do
-    File.open(JSLint::DEFAULT_CONFIG_FILE, "w") { |f| f.puts "default config file" }
+    File.open(JSHint::DEFAULT_CONFIG_FILE, "w") { |f| f.puts "default config file" }
   end
 
   it "should have a config_path setting" do
-    JSLint.config_path = 'some/path'
-    JSLint.config_path.should == 'some/path'
+    JSHint.config_path = 'some/path'
+    JSHint.config_path.should == 'some/path'
   end
 
   describe "paths_from_command_line" do
@@ -91,55 +91,55 @@ describe JSLint::Utils do
 
   describe "copy_config_file" do
     it "throw an error if config path isn't set" do
-      JSLint.config_path = nil
-      lambda { JSLint::Utils.copy_config_file }.should raise_error(ArgumentError)
+      JSHint.config_path = nil
+      lambda { JSHint::Utils.copy_config_file }.should raise_error(ArgumentError)
     end
 
     it "should copy default config to config_path" do
-      JSLint.config_path = "newfile.yml"
-      FileUtils.should_receive(:copy).with(JSLint::DEFAULT_CONFIG_FILE, "newfile.yml")
-      JSLint::Utils.copy_config_file
+      JSHint.config_path = "newfile.yml"
+      FileUtils.should_receive(:copy).with(JSHint::DEFAULT_CONFIG_FILE, "newfile.yml")
+      JSHint::Utils.copy_config_file
     end
 
     it "should not overwrite the file if it exists" do
-      JSLint.config_path = "newfile2.yml"
+      JSHint.config_path = "newfile2.yml"
       File.open("newfile2.yml", "w") { |f| f.write("qwe") }
       FileUtils.should_not_receive(:copy)
-      JSLint::Utils.copy_config_file
+      JSHint::Utils.copy_config_file
     end
   end
 
   describe "remove_config_file" do
     it "throw an error if config path isn't set" do
-      JSLint.config_path = nil
-      lambda { JSLint::Utils.remove_config_file }.should raise_error(ArgumentError)
+      JSHint.config_path = nil
+      lambda { JSHint::Utils.remove_config_file }.should raise_error(ArgumentError)
     end
 
     it "should remove the file if it's identical to default one" do
-      JSLint.config_path = "newfile3.yml"
+      JSHint.config_path = "newfile3.yml"
       File.open("newfile3.yml", "w") { |f| f.puts("default config file") }
       File.exists?("newfile3.yml").should be_true
-      JSLint::Utils.remove_config_file
+      JSHint::Utils.remove_config_file
       File.exists?("newfile3.yml").should be_false
     end
 
     it "should not remove the file if it's not identical to default one" do
-      JSLint.config_path = "newfile4.yml"
+      JSHint.config_path = "newfile4.yml"
       File.open("newfile4.yml", "w") { |f| f.puts("something's changed") }
       File.exists?("newfile4.yml").should be_true
-      JSLint::Utils.remove_config_file
+      JSHint::Utils.remove_config_file
       File.exists?("newfile4.yml").should be_true
     end
 
     it "should not remove the file if it doesn't exist" do
-      JSLint.config_path = "this_doesnt_exist.yml"
-      lambda { JSLint::Utils.remove_config_file }.should_not raise_error
+      JSHint.config_path = "this_doesnt_exist.yml"
+      lambda { JSHint::Utils.remove_config_file }.should_not raise_error
     end
 
     it "should not remove the file if it's not a file" do
       Dir.mkdir("public")
-      JSLint.config_path = "public"
-      lambda { JSLint::Utils.remove_config_file }.should_not raise_error
+      JSHint.config_path = "public"
+      lambda { JSHint::Utils.remove_config_file }.should_not raise_error
       File.exist?("public").should be_true
       File.directory?("public").should be_true
     end
