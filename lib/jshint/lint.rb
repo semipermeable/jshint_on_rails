@@ -10,7 +10,7 @@ module JSHint
   TEST_JAR_CLASS = "Test"
   RHINO_JAR_CLASS = "org.mozilla.javascript.tools.shell.Main"
 
-  JSLINT_FILE = File.expand_path("#{PATH}/vendor/jshint.js")
+  JSHINT_FILE = File.expand_path("#{PATH}/vendor/jshint.js")
 
   class Lint
 
@@ -38,7 +38,7 @@ module JSHint
     def run
       check_java
       Utils.xputs "Running JSHint:\n\n"
-      arguments = "#{JSLINT_FILE} #{option_string.inspect.gsub(/\$/, "\\$")} #{@file_list.join(' ')}"
+      arguments = "#{JSHINT_FILE} #{option_string.inspect.gsub(/\$/, "\\$")} #{@file_list.join(' ')}"
       success = call_java_with_status(RHINO_JAR_FILE, RHINO_JAR_CLASS, arguments)
       raise LintCheckFailure, "JSHint test failed." unless success
     end
