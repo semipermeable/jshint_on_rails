@@ -36,19 +36,13 @@ module JSHint
     end
 
     def run
-      Utils.xputs "Checking Java\n"
       check_java
-      Utils.xputs "Running JSHint...\n"
+      Utils.xputs "Running JSHint...\n\n"
+      Utils.xputs @file_list
       arguments = "#{JSHINT_FILE} #{option_string.inspect.gsub(/\$/, "\\$")} #{@file_list.join(' ')}"
-      Utils.xputs "Calling java (rhino)...\n"
       success = call_java_with_status(RHINO_JAR_FILE, RHINO_JAR_CLASS, arguments)
-      Utils.xputs "Checking exceptions...\n"
-      Utils.xputs LintCheckFailure
-      Utils.xputs success
       raise LintCheckFailure, "JSHint test failed." unless success
-      Utils.xputs "Finale!"
     end
-
 
     private
 
