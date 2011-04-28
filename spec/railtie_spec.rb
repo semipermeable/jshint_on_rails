@@ -8,7 +8,7 @@ describe JSHint::Railtie do
   end
 
   before :each do
-    File.delete(JSHint.config_path) if File.exist?(JSLint.config_path)
+    File.delete(JSHint.config_path) if File.exist?(JSHint.config_path)
   end
 
   describe "create_example_config" do
