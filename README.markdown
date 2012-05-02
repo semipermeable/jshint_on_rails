@@ -27,7 +27,7 @@ The default config allows you to:
 
 To start checking your stuff run the following:
 
-    [bundle exec] rake jslint
+    [bundle exec] rake jshint
 
 Then you should see:
 
@@ -60,7 +60,7 @@ If anything is wrong, you will get something like this instead:
 If you want to test specific file or files (just once, without modifying the config), you can pass paths to include
 and/or paths to exclude to the rake task:
 
-    rake jslint paths=public/javascripts/models/*.js,public/javascripts/lib/*.js exclude_paths=public/javascripts/lib/jquery.js
+    rake jshint paths=public/javascripts/models/*.js,public/javascripts/lib/*.js exclude_paths=public/javascripts/lib/jquery.js
 
 
 ## Credits
